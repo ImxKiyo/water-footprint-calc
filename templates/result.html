@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Footprint Result</title>
+    <style>
+        html, body {
+          height: 100%;
+          margin: 0;
+          font-family: 'Arial', sans-serif;
+        }
+
+        body {
+          color: #fff;
+          background-color: #000;
+          background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://c4.wallpaperflare.com/wallpaper/58/849/262/nature-solo-plants-leaves-wallpaper-preview.jpg');
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-attachment: fixed;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          min-height: 100vh;
+        }
+
+        .container {
+            margin-top: 80px;
+            max-width: 800px;
+            width: 90%;
+            background-color: #212121; /* AMOLED black */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            margin: 50px 0 20px 0;
+            border: 2px solid #0077be;
+            overflow-y: auto;
+            max-height: 80vh;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* Internet Explorer 10+ */
+        }
+
+        /* WebKit browsers (Chrome, Safari) */
+        .container::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+
+        /* Specific styles for the calculator page */
+        .calculator-page .container {
+            overflow-y: visible;
+            max-height: none;
+        }
+        h1 {
+          text-align: center;
+          color: #0077be;
+          margin-bottom: 30px;
+        }
+        h2 {
+            text-align: center;
+            color: #0077be;
+            margin-bottom: 30px;
+        }
+        label {
+          display: block;
+          margin-top: 15px;
+          font-weight: bold;
+          color: #fff;
+        }
+        input[type="number"] {
+          width: 100%;
+          padding: 8px;
+          margin-top: 5px;
+          border: 1px solid #0077be;
+          border-radius: 4px;
+          box-sizing: border-box;
+          background-color: #3D3D3D; /* Lighter shade of black */
+          color: #fff;
+        }
+        button {
+          display: block;
+          width: 100%;
+          padding: 12px;
+          background-color: #0077be;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          margin-top: 30px;
+          font-size: 16px;
+          transition: background-color 0.3s;
+        }
+        button:hover {
+          background-color: #005f9e;
+        }
+        #result {
+          margin-top: 30px;
+          font-weight: bold;
+          text-align: center;
+          font-size: 18px;
+          background-color: #1a1a1a;
+          padding: 15px;
+          border-radius: 4px;
+          border: 1px solid #0077be;
+        }
+        .description {
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #0077be;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #005f9e;
+        }
+
+        #comparison {
+            margin-top: 20px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        body {
+            padding-top: 60px; /* Add padding to body to account for fixed header */
+        }
+
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #0077be;
+            color: white;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            margin-right: 20px;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #d4f0ff;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #0077be;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #0077be;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: rgba(44, 44, 44, 0.6);
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #0077be;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        .button:hover {
+            background-color: #005f9e;
+        }
+    </style>
+</head>
+<body class="calculator-page">
+    <header>
+          <nav class="top-bar">
+              <div class="logo">Water Footprint Calculator</div>
+              <ul class="nav-links">
+                  <li><a href="{{ url_for('home') }}">Home</a></li>
+                  <li><a href="{{ url_for('index') }}">Calculator</a></li>
+              </ul>
+          </nav>
+      </header>
+    <div class="content">
+        <div class="container">
+            <h1>Your Water Footprint Result</h1>
+            <div id="result">
+                <p>Your estimated monthly water footprint is {{ total_usage }} liters ({{ (total_usage / 1000)|round(2) }} cubic meters).</p>
+                <p>The average monthly water footprint is {{ total_average_usage }} liters.</p>
+            </div>
+            <h2>Comparison with Averages</h2>
+            <table>
+                <tr>
+                    <th>Category</th>
+                    <th>Your Usage</th>
+                    <th>Average Usage</th>
+                </tr>
+                {% for category, value in user_values.items() %}
+                <tr>
+                    <td>{{ category|capitalize }}</td>
+                    <td>{{ value }}</td>
+                    <td>{{ averages[loop.index0]|round(2) }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <div style="text-align: center;">
+                <a href="{{ url_for('index') }}" class="button">Back to Calculator</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
